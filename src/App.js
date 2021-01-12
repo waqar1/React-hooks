@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from './customhooks/useForm';
 import { useFetch } from './customhooks/useFetch';
 import './App.css';
 import { Hello } from './Hello';
+import { useEffectLayoutCustom } from './customhooks/useEffectLayoutCustom';
+import Callbackhook from './Callbackhook';
 
 const App = () => {
   // can be divided into two separate useState if don't want to use an object
@@ -15,6 +17,12 @@ const App = () => {
   // Custom Hook
   // Passed counter value to get dynamic facts :)
   const { data, loading } = useFetch(`http://numbersapi.com/${countOne}/math`);
+
+  // useRef
+  const inputRef = useRef();
+
+  // custom effect
+  useEffectLayoutCustom();
 
   return (
     <div className="App">
@@ -48,6 +56,14 @@ const App = () => {
         {showHello && <Hello/>}
         <div>Fetch Custom Hook Data</div>
         {loading ? 'loading...' : data}
+        <input ref={inputRef} name="email" value={values.email} onChange={handleChange} />
+        <button onClick={() => {
+            inputRef.current.focus();
+          }}
+        >
+          Focus
+        </button>
+        {<Callbackhook/>}
       </div>
     </div>
   );

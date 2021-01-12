@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 
-export const Hello = () => {
+export const Hello = memo(({ increment }) => {
+
+  const renders = useRef(0);
+  console.log('renders: ', renders.current++);
+
   useEffect(() => {
     console.log('render');
     const onMouseMove = e => {
@@ -17,5 +21,10 @@ export const Hello = () => {
     console.log('render1');
   }, []);
 
-  return <div>Hello</div>;
-}
+  return (
+    <div>
+      <div>Hello</div>
+      {increment && <button onClick={increment}>Increment</button>}
+    </div>
+  );
+});
